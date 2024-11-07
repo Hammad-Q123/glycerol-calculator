@@ -165,53 +165,44 @@ def main():
     # Create tabs
     tab1, tab2, tab3 = st.tabs(["Temperature Control", "Process Parameters", "Pressure & pH Control"])
 
-    # Initialize session state for all parameters
-    if 't2' not in st.session_state:
-        st.session_state.update({
-            't2': 200, 't3': 200, 't4': 200, 't1': 195, 't5': 195,
-            'lhsv': 0.6, 'h2gly_ratio': 6.5, 'liquid_feed': 100,
-            'hydrogen_flow': 450, 'top_pressure': 30, 'bottom_pressure': 25,
-            'feed_ph': 7.0
-        })
-
     # Temperature Control Tab
     with tab1:
         st.markdown("### Temperature Parameters")
-        st.session_state.t2 = st.slider("T2 (°C) - Critical:", 180.0, 220.0, st.session_state.t2)
-        st.session_state.t3 = st.slider("T3 (°C):", 180.0, 220.0, st.session_state.t3)
-        st.session_state.t4 = st.slider("T4 (°C):", 180.0, 220.0, st.session_state.t4)
-        st.session_state.t1 = st.slider("T1 (°C):", 180.0, 220.0, st.session_state.t1)
-        st.session_state.t5 = st.slider("T5 (°C):", 180.0, 220.0, st.session_state.t5)
+        t2 = st.slider("T2 (°C) - Critical:", 180.0, 220.0, 200.0)
+        t3 = st.slider("T3 (°C):", 180.0, 220.0, 200.0)
+        t4 = st.slider("T4 (°C):", 180.0, 220.0, 200.0)
+        t1 = st.slider("T1 (°C):", 180.0, 220.0, 195.0)
+        t5 = st.slider("T5 (°C):", 180.0, 220.0, 195.0)
 
     # Process Parameters Tab
     with tab2:
         st.markdown("### Process Parameters")
-        st.session_state.lhsv = st.slider("LHSV (1/h):", 0.4, 0.8, st.session_state.lhsv, 0.1)
-        st.session_state.h2gly_ratio = st.slider("H2:GLY Ratio:", 5.0, 8.0, st.session_state.h2gly_ratio, 0.1)
-        st.session_state.liquid_feed = st.slider("Liquid Feed (g/h):", 50, 150, st.session_state.liquid_feed)
-        st.session_state.hydrogen_flow = st.slider("Hydrogen Flow (mL/min):", 300, 600, st.session_state.hydrogen_flow, 10)
+        lhsv = st.slider("LHSV (1/h):", 0.4, 0.8, 0.6, 0.1)
+        h2gly_ratio = st.slider("H2:GLY Ratio:", 5.0, 8.0, 6.5, 0.1)
+        liquid_feed = st.slider("Liquid Feed (g/h):", 50, 150, 100)
+        hydrogen_flow = st.slider("Hydrogen Flow (mL/min):", 300, 600, 450, 10)
 
     # Pressure & pH Control Tab
     with tab3:
         st.markdown("### Pressure & pH Parameters")
-        st.session_state.top_pressure = st.slider("Top Pressure (bar):", 20, 40, st.session_state.top_pressure)
-        st.session_state.bottom_pressure = st.slider("Bottom Pressure (bar):", 15, 35, st.session_state.bottom_pressure)
-        st.session_state.feed_ph = st.slider("Feed pH:", 6.0, 8.0, st.session_state.feed_ph, 0.1)
+        top_pressure = st.slider("Top Pressure (bar):", 20, 40, 30)
+        bottom_pressure = st.slider("Bottom Pressure (bar):", 15, 35, 25)
+        feed_ph = st.slider("Feed pH:", 6.0, 8.0, 7.0, 0.1)
 
     # Calculate conversion and impacts
     params = {
-        't2': st.session_state.t2,
-        't3': st.session_state.t3,
-        't4': st.session_state.t4,
-        't1': st.session_state.t1,
-        't5': st.session_state.t5,
-        'lhsv': st.session_state.lhsv,
-        'h2gly_ratio': st.session_state.h2gly_ratio,
-        'liquid_feed': st.session_state.liquid_feed,
-        'hydrogen_flow': st.session_state.hydrogen_flow,
-        'top_pressure': st.session_state.top_pressure,
-        'bottom_pressure': st.session_state.bottom_pressure,
-        'feed_ph': st.session_state.feed_ph
+        't2': t2,
+        't3': t3,
+        't4': t4,
+        't1': t1,
+        't5': t5,
+        'lhsv': lhsv,
+        'h2gly_ratio': h2gly_ratio,
+        'liquid_feed': liquid_feed,
+        'hydrogen_flow': hydrogen_flow,
+        'top_pressure': top_pressure,
+        'bottom_pressure': bottom_pressure,
+        'feed_ph': feed_ph
     }
 
     conversion, impacts = calculate_total_conversion(params)
